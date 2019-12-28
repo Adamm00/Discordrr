@@ -11,7 +11,7 @@
 #                                                                                         #
 #                        Sonarr & Radarr Discord Notification BOT                         #
 #                          By Adamm - https://github.com/Adamm00                          #
-#                                   21/11/2019 - v1.0.0                                   #
+#                                   29/11/2019 - v1.0.0                                   #
 ###########################################################################################
 
 botname="SkynetBOT"
@@ -40,7 +40,7 @@ if [ "$sonarr_eventtype" = "Test" ]; then
   	}]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 elif [ "$sonarr_eventtype" = "Grab" ]; then
   ssize="$(if [ "$sonarr_release_size" -gt "1073741824" ]; then echo "$sonarr_release_size 1073741824" | awk '{printf "%.2fGB \n", $1/$2}'; else echo $((sonarr_release_size / 1048576 ))MB; fi)"
   curl -s -H "Content-Type: application/json" \
@@ -92,7 +92,7 @@ elif [ "$sonarr_eventtype" = "Grab" ]; then
   	}]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 elif [ "$sonarr_eventtype" = "Download" ]; then
   curl -s -H "Content-Type: application/json" \
   -X POST \
@@ -133,7 +133,7 @@ elif [ "$sonarr_eventtype" = "Download" ]; then
   	}]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 elif [ "$sonarr_eventtype" = "Rename" ]; then
   curl -s -H "Content-Type: application/json" \
   -X POST \
@@ -147,7 +147,7 @@ elif [ "$sonarr_eventtype" = "Rename" ]; then
     }]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 elif [ "$sonarr_eventtype" = "HealthIssue" ]; then
   curl -s -H "Content-Type: application/json" \
   -X POST \
@@ -173,7 +173,7 @@ elif [ "$sonarr_eventtype" = "HealthIssue" ]; then
   	}]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 fi
 
 
@@ -191,7 +191,7 @@ if [ "$radarr_eventtype" = "Test" ]; then
     }]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 elif [ "$radarr_eventtype" = "Grab" ]; then
   rsize="$(if [ "$radarr_release_size" -gt "1073741824" ]; then echo "$radarr_release_size 1073741824" | awk '{printf "%.2fGB \n", $1/$2}'; else echo $((radarr_release_size / 1048576 ))MB; fi)"
   curl -s -H "Content-Type: application/json" \
@@ -238,7 +238,7 @@ elif [ "$radarr_eventtype" = "Grab" ]; then
   	}]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 elif [ "$radarr_eventtype" = "Download" ]; then
   curl -s -H "Content-Type: application/json" \
   -X POST \
@@ -284,7 +284,7 @@ elif [ "$radarr_eventtype" = "Download" ]; then
   	}]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 elif [ "$radarr_eventtype" = "Rename" ]; then
   curl -s -H "Content-Type: application/json" \
   -X POST \
@@ -298,7 +298,7 @@ elif [ "$radarr_eventtype" = "Rename" ]; then
     }]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 elif [ "$radarr_eventtype" = "HealthIssue" ]; then
   curl -s -H "Content-Type: application/json" \
   -X POST \
@@ -324,5 +324,5 @@ elif [ "$radarr_eventtype" = "HealthIssue" ]; then
   	}]
   }
 EOF
-      )" $webhookurl
+      )" "$webhookurl"
 fi
