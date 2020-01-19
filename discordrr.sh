@@ -11,7 +11,7 @@
 #                                                                                         #
 #                        Sonarr & Radarr Discord Notification BOT                         #
 #                          By Adamm - https://github.com/Adamm00                          #
-#                                   29/11/2019 - v1.0.0                                   #
+#                                   20/01/2020 - v1.0.0                                   #
 ###########################################################################################
 
 botname="SkynetBOT"
@@ -27,9 +27,10 @@ dlseason="$sonarr_episodefile_seasonnumber"
 dlepisode="$sonarr_episodefile_episodenumbers"
 
 if [ "$sonarr_eventtype" = "Test" ]; then
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
   	"username": "$botname",
   	"avatar_url": "$avatar",
@@ -40,12 +41,13 @@ if [ "$sonarr_eventtype" = "Test" ]; then
   	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 elif [ "$sonarr_eventtype" = "Grab" ]; then
-  ssize="$(if [ "$sonarr_release_size" -gt "1073741824" ]; then echo "$sonarr_release_size 1073741824" | awk '{printf "%.2fGB \n", $1/$2}'; else echo $((sonarr_release_size / 1048576 ))MB; fi)"
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	ssize="$(if [ "$sonarr_release_size" -gt "1073741824" ]; then echo "$sonarr_release_size 1073741824" | awk '{printf "%.2fGB \n", $1/$2}'; else echo $((sonarr_release_size / 1048576))MB; fi)"
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
   	"username": "$botname",
   	"avatar_url": "$avatar",
@@ -92,11 +94,12 @@ elif [ "$sonarr_eventtype" = "Grab" ]; then
   	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 elif [ "$sonarr_eventtype" = "Download" ]; then
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
   	"username": "$botname",
   	"avatar_url": "$avatar",
@@ -133,33 +136,35 @@ elif [ "$sonarr_eventtype" = "Download" ]; then
   	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 elif [ "$sonarr_eventtype" = "Rename" ]; then
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
-    "username": "$botname",
-    "avatar_url": "$avatar",
-    "content": "Renamed Show",
-    "embeds": [{
-      "title": "$show"
-    }]
+	"username": "$botname",
+	"avatar_url": "$avatar",
+	"content": "Renamed Show",
+	"embeds": [{
+	  "title": "$show"
+	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 elif [ "$sonarr_eventtype" = "HealthIssue" ]; then
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
   	"username": "$botname",
   	"avatar_url": "$avatar",
   	"content": "Sonarr Health Issue Detected @everyone",
   	"embeds": [{
-      "title": "$sonarr_health_issue_type",
-      "color": 15749200,
-      "url": "$sonarr_health_issue_wiki",
+	  "title": "$sonarr_health_issue_type",
+	  "color": 15749200,
+	  "url": "$sonarr_health_issue_wiki",
   		"fields": [{
   				"name": "Message",
   				"value": "$sonarr_health_issue_message",
@@ -173,30 +178,31 @@ elif [ "$sonarr_eventtype" = "HealthIssue" ]; then
   	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 fi
 
-
 if [ "$radarr_eventtype" = "Test" ]; then
-  curl -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	curl -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
-    "username": "$botname",
-    "avatar_url": "$avatar",
-    "embeds": [{
-      "title": "$radarr_eventtype message from Radarr",
-      "color": 15749200,
-      "description": "$(date)"
-    }]
+	"username": "$botname",
+	"avatar_url": "$avatar",
+	"embeds": [{
+	  "title": "$radarr_eventtype message from Radarr",
+	  "color": 15749200,
+	  "description": "$(date)"
+	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 elif [ "$radarr_eventtype" = "Grab" ]; then
-  rsize="$(if [ "$radarr_release_size" -gt "1073741824" ]; then echo "$radarr_release_size 1073741824" | awk '{printf "%.2fGB \n", $1/$2}'; else echo $((radarr_release_size / 1048576 ))MB; fi)"
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	rsize="$(if [ "$radarr_release_size" -gt "1073741824" ]; then echo "$radarr_release_size 1073741824" | awk '{printf "%.2fGB \n", $1/$2}'; else echo $((radarr_release_size / 1048576))MB; fi)"
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
   	"username": "$botname",
   	"avatar_url": "$avatar",
@@ -238,11 +244,12 @@ elif [ "$radarr_eventtype" = "Grab" ]; then
   	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 elif [ "$radarr_eventtype" = "Download" ]; then
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
   	"username": "$botname",
   	"avatar_url": "$avatar",
@@ -284,33 +291,35 @@ elif [ "$radarr_eventtype" = "Download" ]; then
   	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 elif [ "$radarr_eventtype" = "Rename" ]; then
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
-    "username": "$botname",
-    "avatar_url": "$avatar",
-    "content": "Renamed Movie",
-    "embeds": [{
-      "title": "$radarr_movie_title"
-    }]
+	"username": "$botname",
+	"avatar_url": "$avatar",
+	"content": "Renamed Movie",
+	"embeds": [{
+	  "title": "$radarr_movie_title"
+	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 elif [ "$radarr_eventtype" = "HealthIssue" ]; then
-  curl -s -H "Content-Type: application/json" \
-  -X POST \
-  -d "$(cat <<EOF
+	curl -s -H "Content-Type: application/json" \
+		-X POST \
+		-d "$(
+			cat << EOF
   {
   	"username": "$botname",
   	"avatar_url": "$avatar",
   	"content": "Radarr Health Issue Detected @everyone",
   	"embeds": [{
-      "title": "$radarr_health_issue_type",
-      "color": 15749200,
-      "url": "$radarr_health_issue_wiki",
+	  "title": "$radarr_health_issue_type",
+	  "color": 15749200,
+	  "url": "$radarr_health_issue_wiki",
   		"fields": [{
   				"name": "Message",
   				"value": "$radarr_health_issue_message",
@@ -324,5 +333,5 @@ elif [ "$radarr_eventtype" = "HealthIssue" ]; then
   	}]
   }
 EOF
-      )" "$webhookurl"
+		)" "$webhookurl"
 fi
