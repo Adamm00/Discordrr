@@ -17,6 +17,7 @@
 botname="DiscordrrBOT"
 avatar="https://i.imgur.com/jZk12SL.png"
 webhookurl=""
+jellyfinapi=""
 
 show="$sonarr_series_title"
 grabtitle="$sonarr_release_episodetitles"
@@ -25,13 +26,13 @@ grabepisode="$sonarr_release_episodenumbers"
 dltitle="$sonarr_episodefile_episodetitles"
 dlseason="$sonarr_episodefile_seasonnumber"
 dlepisode="$sonarr_episodefile_episodenumbers"
+eventtype="${sonarr_eventtype}${radarr_eventtype}"
 
 Log_Event() {
-	if [ -n "$sonarr_eventtype" ]; then
-		echo "Sending $sonarr_eventtype Event Notificion" 1>&2
-	elif [ -n "$radarr_eventtype" ]; then
-		echo "Sending $radarr_eventtype Event Notificion" 1>&2
+	if [ -n "$jellyfinapi" ]; then
+		curl -s -d "" "http://192.168.1.69:8096/library/refresh?api_key=$jellyfinapi"
 	fi
+	echo "Sending $eventtype Event Notificion" 1>&2
 }
 
 if [ "$sonarr_eventtype" = "Test" ]; then
