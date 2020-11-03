@@ -11,7 +11,7 @@
 #                                                                                         #
 #                        Sonarr & Radarr Discord Notification BOT                         #
 #                          By Adamm - https://github.com/Adamm00                          #
-#                                   07/08/2020 - v1.0.1                                   #
+#                                   04/11/2020 - v1.0.2                                   #
 ###########################################################################################
 
 botname="DiscordrrBOT"
@@ -30,7 +30,7 @@ eventtype="${sonarr_eventtype}${radarr_eventtype}"
 
 Log_Event() {
 	if [ -n "$jellyfinapi" ]; then
-		curl -s -d "" "http://192.168.1.69:8096/library/refresh?api_key=$jellyfinapi"
+		curl -s -d "" "http://192.168.1.69:8096/library/refresh?api_key=${jellyfinapi}"
 	fi
 	echo "Sending $eventtype Event Notificion" 1>&2
 }
@@ -101,7 +101,10 @@ elif [ "$sonarr_eventtype" = "Grab" ]; then
   		"footer": {
   			"text": "$(date)",
   			"icon_url": "$avatar"
-  		}
+  		},
+		"image": {
+    		"url": "https://artworks.thetvdb.com/banners/posters/${sonarr_series_tvdbid}-1_t.jpg"
+		}
   	}]
   }
 EOF
@@ -144,7 +147,10 @@ elif [ "$sonarr_eventtype" = "Download" ]; then
   		"footer": {
   			"text": "$(date)",
   			"icon_url": "$avatar"
-  		}
+  		},
+		"image": {
+    		"url": "https://artworks.thetvdb.com/banners/posters/${sonarr_series_tvdbid}-1_t.jpg"
+		}
   	}]
   }
 EOF
